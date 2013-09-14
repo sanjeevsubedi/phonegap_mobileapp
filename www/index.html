@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="format-detection" content="telephone=no" />
+        <meta name="viewport"
+              content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+        <title>Phonegap mobile App</title>
+        <script src="js/jquery-1.7.2.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+
+        <!--comment this script if you are viewing app in browser-->
+        <script type="text/javascript" src="phonegap.js"></script>
+    </head>
+    <body>
+        <script type="text/javascript">
+            //blooean value to check whether app is opened in browser of device
+            var isPhoneGap = !!(window.PhoneGap || window.cordova);
+            //json data. In real scenario, app gets the data from the api
+            var devices = '[{"id":"47","name":"samsung 5","status":"1"},{"id":"46","name":"galaxy","status":"1"},{"id":"45","name":"ipad","status":"1"},{"id":"44","name":"ipad mini","status":"1"},{"id":"43","name":"windows mobile","status":"1"},{"id":"42","name":"nexus","status":"1"},{"id":"41","name":"nexus 10","status":"1"}]';
+            //convert json string to json object
+            var devicesObj = JSON.parse(devices);
+            //fuction which displays the data
+            var callback = function() {
+                $.each(devicesObj, function(i, item) {
+                    $(".lists ul").append("<li>" + item.name + "</li>");
+                });
+            }
+            
+            //this block is rendered when app is opened in device
+            if (isPhoneGap) {
+                document.addEventListener("deviceready", function() {
+                    callback();
+                }, false);
+
+            } 
+            //this block is rendered when app is opened in browser
+            else {
+                $(document).ready(function() {
+                    callback();
+                })
+            }
+        </script>
+        <div class="container">
+            <h3>
+                Devices
+            </h3>
+            <div class="lists">
+                <ul>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>
